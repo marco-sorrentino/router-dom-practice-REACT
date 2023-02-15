@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Badge } from "react-bootstrap";
+import { Container, Row, Col, Badge, Spinner } from "react-bootstrap";
 
 const Details = () => {
   // Mi prendo parametro che ho messo nell'url
@@ -10,6 +10,7 @@ const Details = () => {
   console.log(params);
 
   const [prodotto, setProdotto] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getData();
@@ -34,6 +35,7 @@ const Details = () => {
           isLoading: false,
         }); */
         setProdotto(data);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -61,6 +63,14 @@ const Details = () => {
                   Category: {prodotto.category}
                 </Badge>
               </Card.Body>
+              {isLoading && (
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  variant="danger"
+                />
+              )}
             </Card>
           </Col>
         </Row>

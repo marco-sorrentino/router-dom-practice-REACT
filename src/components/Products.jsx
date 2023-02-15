@@ -1,4 +1,4 @@
-import { Card, Button, Container, Col, Row } from "react-bootstrap";
+import { Card, Button, Container, Col, Row, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,6 +9,7 @@ const Products = () => {
   }; */
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   /*   componentDidMount = () => {
     this.getData();
@@ -30,6 +31,7 @@ const Products = () => {
           products: prodotti,
         }); */
         setProducts(prodotti);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -60,6 +62,9 @@ const Products = () => {
             </Col>
           );
         })}
+        {isLoading && (
+          <Spinner as="span" animation="grow" size="sm" variant="danger" />
+        )}
       </Row>
     </Container>
   );
