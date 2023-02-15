@@ -1,5 +1,5 @@
 import { Card, Button, Container, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -7,7 +7,7 @@ const Products = () => {
   /*   state = {
     products: [],
   }; */
-
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   /*   componentDidMount = () => {
@@ -18,6 +18,7 @@ const Products = () => {
   useEffect(() => {
     getData();
   }, []);
+
   const getData = async () => {
     try {
       const res = await fetch("https://dummyjson.com/products");
@@ -41,16 +42,21 @@ const Products = () => {
         {products.map((el) => {
           return (
             <Col md={2} key={el.id}>
-              <Link to={"/prodotto/" + el.id}>
-                <Card>
-                  <Card.Img variant="top" src={el.thumbnail} />
-                  <Card.Body>
-                    <Card.Title>{el.title}</Card.Title>
-                    <Card.Text>{el.brand}</Card.Text>
-                    <Button variant="primary">Vedi dettagli</Button>
-                  </Card.Body>
-                </Card>
-              </Link>
+              <Card>
+                <Card.Img variant="top" src={el.thumbnail} />
+                <Card.Body>
+                  <Card.Title>{el.title}</Card.Title>
+                  <Card.Text>{el.brand}</Card.Text>
+                  <Button
+                    onClick={() => {
+                      navigate("/prodotto/" + el.id);
+                    }}
+                    variant="primary"
+                  >
+                    Vedi dettagli
+                  </Button>
+                </Card.Body>
+              </Card>
             </Col>
           );
         })}
